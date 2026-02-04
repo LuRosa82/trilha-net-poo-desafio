@@ -1,26 +1,39 @@
+using System;
+
 namespace DesafioPOO.Models
 {
     public abstract class Smartphone
     {
         public string Numero { get; set; }
-        // TODO: Implementar as propriedades faltantes de acordo com o diagrama
 
-        public Smartphone(string numero)
+        private readonly string _modelo;
+        private readonly string _imei;
+        private readonly int _memoria;
+
+        protected Smartphone(string numero, string modelo, string imei, int memoria)
         {
-            Numero = numero;
-            // TODO: Passar os parâmetros do construtor para as propriedades
+            Numero = ValidateNonEmpty(numero, nameof(numero));
+            _modelo = ValidateNonEmpty(modelo, nameof(modelo));
+            _imei   = ValidateNonEmpty(imei,   nameof(imei));
+            if (memoria <= 0)
+                throw new ArgumentOutOfRangeException(nameof(memoria), "Memória deve ser maior que zero.");
+            _memoria = memoria;
         }
 
-        public void Ligar()
+        public void Ligar() => Console.WriteLine("Ligando...");
+        public void ReceberLigacao() => Console.WriteLine("Recebendo ligação...");
+        public abstract void InstalarAplicativo(string nome);
+
+        protected static string ValidateNonEmpty(string valor, string paramName)
         {
-            Console.WriteLine("Ligando...");
+            if (string.IsNullOrWhiteSpace(valor))
+                throw new ArgumentException($"O parâmetro {paramName} é obrigatório.", paramName);
+            return valor.Trim();
         }
 
-        public void ReceberLigacao()
-        {
-            Console.WriteLine("Recebendo ligação...");
-        }
-
-        public abstract void InstalarAplicativo(string nomeApp);
+        // (opcional) getters de leitura
+        public string ObterModelo() => _modelo;
+        public string ObterIMEI()   => _imei;
+        public int ObterMemoria()   => _memoria;
     }
 }

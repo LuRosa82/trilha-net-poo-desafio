@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <!-- EXCLUI quaisquer .cs da pasta de testes do build do app -->
+  <ItemGroup>
+    <Compile Remove="DesafioPOO.Tests\**\*.cs" />
+  </ItemGroup>
 
 </Project>
